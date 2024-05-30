@@ -1,0 +1,32 @@
+#lang racket/base
+
+(define append
+    (lambda (l1 l2)
+        (if (eq? l1 '()) l2
+            (if (eq? (cdr l1) '())
+                (cons (car l1) l2)
+                (cons (car l1) (append (cdr l1) l2))))        
+))
+
+(define reverse
+    (lambda (l)
+      (if (eq? l '()) '()
+        (if (eq? (cdr l) '())
+            l 
+            (append (reverse (cdr l)) (cons (car l) '()))))
+))
+
+(define numToList
+    (lambda (num amount)
+    (if (<= amount 0) '()
+        (cons num (numToList num (+ amount -1))))
+))
+
+(define duplicate-items
+    (lambda (lst dup-count)
+        (if (eq? lst '()) 
+            '()
+            (append (numToList (car lst) (car dup-count)) (duplicate-items (cdr lst) 
+                                                          (append (cdr dup-count) 
+                                                          (cons (car dup-count) '())))))
+))
